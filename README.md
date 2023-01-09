@@ -25,3 +25,8 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 ```
 kubectl label nodes <worker_node_name> kubernetes.io/role=worker
 ```
+
+### Check service as a domain
+```
+curl -H "Host: test.min.doman.com" -I 192.168.50.112
+```
