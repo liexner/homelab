@@ -3,7 +3,7 @@
 ### Install masternode
 
 ```
-curl -sfL https://get.k3s.io | sh -s - --disable traefik --write-kubeconfig-mode 644 --node-name k3s-master-01
+curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --node-name k3s-master-01
 ```
 
 ### Get token
