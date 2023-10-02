@@ -6,6 +6,11 @@
 curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --node-name k3s-master-01
 ```
 
+### Install cert-manager
+```
+https://cert-manager.io/docs/installation/
+```
+
 ### Get token
 ```
 cat /var/lib/rancher/k3s/server/node-token
