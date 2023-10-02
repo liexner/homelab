@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: new-test-pod
+  namespace: linus
+spec:
+  containers:
+  - name: test-container
+    image: busybox  # You can use a minimal image like BusyBox for testing
+    command: ["sh", "-c", "tail -f /dev/null"]
+    volumeMounts:
+    - name: nfs-volume
+      mountPath: /mnt/nfs
+  volumes:
+  - name: nfs-volume
+    nfs:
+      server: 192.168.50.41  
+      path: /home/liexner/kluster-storage  
+
+#kubectl exec -n linus -it new-test-pod -- /bin/sh
