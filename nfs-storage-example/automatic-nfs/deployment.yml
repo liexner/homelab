@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: storage-webserver
+  namespace: linus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: storage-webserver
+  template:
+    metadata:
+      labels:
+        app: storage-webserver
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nfs-storage
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: nfs-storage
+          persistentVolumeClaim:
+            claimName: webserver-pvc  # Reference the PVC
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: storage-webserver-service
+  namespace: linus
+spec:
+  selector:
+    app: storage-webserver
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+--- #INGRESS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-webserver-ingress
+  namespace: linus
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  rules:
+    - host: test1.exner.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: storage-webserver-service
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - test1.exner.dev
+      secretName: test-ett-exner-dev-tls
+
