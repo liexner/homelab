@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mealie
+  namespace: mealie
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mealie
+  template:
+    metadata:
+      labels:
+        app: mealie
+    spec:
+      containers:
+        - name: mealie
+          image: ghcr.io/mealie-recipes/mealie:nightly
+          env:
+            - name: ALLOW_SIGNUP
+              value: "false"
+            - name: DEFAULT_EMAIL
+              value: "liexner@gmail.com"
+          ports:
+            - containerPort: 9000
+          volumeMounts:
+            - name: nfs-storage
+              mountPath: /app/data/
+      volumes:
+        - name: nfs-storage
+          persistentVolumeClaim:
+            claimName: mealie-pvc  # Reference the PVC
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mealie-service
+  namespace: mealie
+spec:
+  selector:
+    app: mealie
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
+
+--- #INGRESS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-webserver-ingress
+  namespace: mealie
+  annotations:
+    spec.ingressClassName: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  rules:
+    - host: mealie.exner.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mealie-service
+                port:
+                  number: 9000
+  tls:
+    - hosts:
+        - mealie.exner.dev
+      secretName: mealie-exner-dev-tls
+
