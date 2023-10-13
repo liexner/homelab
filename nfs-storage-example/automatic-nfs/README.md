@@ -1,6 +1,6 @@
 ### Install nfs provisioner
 ```
-helm install -n nfs-provisioning \
+upgrade --install --create-namespace -n nfs-provisioning \
   --create-namespace \
   nfs-subdir-external-provisioner \
   nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
