@@ -9,7 +9,7 @@ curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --node-name k
 ### Install cert-manager & cluster issuer
 ```
 install -> https://cert-manager.io/docs/installation/
-apply -> https://github.com/liexner/kubernetes/blob/main/cluster-issuer/clusterIssuer.yml
+apply -> [clusterIssuer](/guides/content/editing-an-existing-page](https://github.com/liexner/kubernetes/blob/main/cluster-issuer/clusterIssuer.yml)
 ```
 
 ### Get token
