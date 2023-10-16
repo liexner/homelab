@@ -9,7 +9,7 @@ curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --node-name k
 ### Install cert-manager & cluster issuer
 ```
 install -> https://cert-manager.io/docs/installation/
-apply -> [clusterIssuer](../blob/main/cluster-issuer/clusterIssuer.yml)
+apply -> [clusterIssuer](blob/main/cluster-issuer/clusterIssuer.yml)
 ```
 # worker-node setup
 
