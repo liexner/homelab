@@ -11,7 +11,7 @@ curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --node-name k
 install -> https://cert-manager.io/docs/installation/
 apply -> [clusterIssuer](../blob/main/cluster-issuer/clusterIssuer.yml)
 ```
-# Worker node-setup
+# worker-node setup
 
 ### Get token from master-node
 ```
