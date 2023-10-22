@@ -1,16 +1,18 @@
 # k3s master-node setup
 
-### Install masternode
+### 1. Install masternode
 
 ```
 curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --node-name k3s-master-01 --disable=traefik
 ```
+### 2. Install custom traefik via helm
 
-### Install cert-manager & cluster issuer
-```
-install -> https://cert-manager.io/docs/installation/
-apply -> [clusterIssuer](https://github.com/liexner/kubernetes/blob/main/cluster-issuer/clusterIssuer.yml)
-```
+### 3. Install cert-manager & cluster issuer
+
+### 4. Install nfs-provisioner
+
+
+
 # worker-node setup
 
 ### Get token from master-node
