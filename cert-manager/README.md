@@ -1,6 +1,6 @@
 # Install cert-manager via apply
 ```
-install -> https://cert-manager.io/docs/installation/
+https://cert-manager.io/docs/installation/
 
 ```
 # Install cluster-issuer
