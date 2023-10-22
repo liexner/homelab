@@ -3,7 +3,7 @@
 ### Install masternode
 
 ```
-curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --node-name k3s-master-01
+curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --node-name k3s-master-01 --disable=traefik
 ```
 
 ### Install cert-manager & cluster issuer
@@ -27,8 +27,15 @@ curl -sfL https://get.k3s.io | K3S_NODE_NAME=k3s-worker-01 K3S_URL=https://<IP>:
 ```
 kubectl label nodes <worker_node_name> kubernetes.io/role=worker
 ```
-
+# Other
 ### Check service as a domain
 ```
 curl -H "Host: test.min.doman.com" -I 192.168.50.112
 ```
+
+### Remove pods stuck in "Terminating" state
+```
+kubectl get pods --all-namespaces | grep Terminating | awk '{print $2 " -n " $1}' | xargs -L1 kubectl delete pod --grace-period=0 --force
+```
+
+
