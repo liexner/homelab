@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-webserver
-  namespace: linus
+  namespace: testing
 spec:
   replicas: 1
   selector:
@@ -23,7 +23,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
-  namespace: linus
+  namespace: testing
 spec:
   selector:
     app: nginx-webserver
@@ -36,10 +36,11 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: nginx-webserver-ingress
-  namespace: linus
+  namespace: testing
   annotations:
-    kubernetes.io/ingress.class: traefik
+    spec.ingressClassName: traefik
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-auth-middleware@kubernetescrd
 spec:
   rules:
     - host: test.exner.dev
@@ -52,7 +53,24 @@ spec:
                 name: nginx-service
                 port:
                   number: 80
+                  
   tls:
     - hosts:
         - test.exner.dev
       secretName: test-exner-dev-tls
+
+
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: nginx-ingressroute
+#   namespace: linus
+# spec:
+#   entryPoints:
+#     - web
+#   routes:
+#   - match: Host(`your.example.com`)
+#     kind: Rule
+#     services:
+#     - name: nginx-service
+#       port: 80

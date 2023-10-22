@@ -4,7 +4,7 @@ metadata:
   name: mealie-pvc
   namespace: mealie
 spec:
-  storageClassName: nfs-client #not needed if nfs-provisioner is default
+  #storageClassName: nfs-client #not needed if nfs-provisioner is default
   accessModes:
     - ReadWriteMany
   resources:
