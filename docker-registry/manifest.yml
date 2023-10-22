@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry
+  namespace: registry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry
+  template:
+    metadata:
+      labels:
+        app: registry
+    spec:
+      containers:
+        - name: registry
+          image: registry:2
+          env:
+            - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
+              value: /data
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: nfs-storage
+              mountPath: /data
+      volumes:
+        - name: nfs-storage
+          persistentVolumeClaim:
+            claimName: registry-pvc  # Reference the PVC
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry-service
+  namespace: registry
+spec:
+  selector:
+    app: registry
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+
+--- #INGRESS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: registry-ingress
+  namespace: registry
+  annotations:
+    spec.ingressClassName: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-auth-middleware@kubernetescrd
+spec:
+  rules:
+    - host: registry.exner.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: registry-service
+                port:
+                  number: 5000
+  tls:
+    - hosts:
+        - registry.exner.dev
+      secretName: registry-exner-dev-tls
+
