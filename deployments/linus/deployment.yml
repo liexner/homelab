@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: linus
+  namespace: linus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: linus
+  template:
+    metadata:
+      labels:
+        app: linus
+    spec:
+      containers:
+        - name: linus
+          image: registry.exner.dev/linus
+          ports:
+            - containerPort: 3000
+      imagePullSecrets:
+      - name: regcred
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: linus
+  namespace: linus
+spec:
+  selector:
+    app: linus
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+
+--- #INGRESS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: linus
+  namespace: linus
+  annotations:
+    spec.ingressClassName: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.middlewares: traefik-auth-middleware@kubernetescrd
+
+spec:
+  rules:
+    - host: test1.exner.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: linus
+                port:
+                  number: 3000
+  tls:
+    - hosts:
+        - test1.exner.dev
+      secretName: test1-exner-dev-tls
