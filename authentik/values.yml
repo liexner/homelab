@@ -1,0 +1,27 @@
+authentik:
+  secret_key: "PleaseGenerateA50CharKey"
+  error_reporting:
+    enabled: false
+  postgresql:
+    password: "ThisIsNotASecurePassword"
+
+ingress:
+  enabled: true
+  annotations:
+    spec.ingressClassName: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: auth.exner.dev
+      paths:
+        - path: "/"
+          pathType: Prefix
+  tls:
+    - hosts:
+        - auth.exner.dev
+      secretName: auth-exner-dev-tls
+
+postgresql:
+  enabled: true
+  postgresqlPassword: "ThisIsNotASecurePassword"
+redis:
+  enabled: true
