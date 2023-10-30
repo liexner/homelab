@@ -1,0 +1,16 @@
+ingress:
+  enabled: true
+  tls:
+    - hosts:
+        - port.exner.dev
+      secretName: port-exner-dev-tls
+  hosts:
+    - host: port.exner.dev
+      paths:
+        - path: /
+          backend:
+            serviceName: portainer
+            servicePort: 9000
+  annotations:
+    spec.ingressClassName: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
