@@ -7,10 +7,8 @@ ingress:
   hosts:
     - host: port.exner.dev
       paths:
-        - path: /
-          backend:
-            serviceName: portainer
-            servicePort: 9000
+        - path: "/"
+
   annotations:
     spec.ingressClassName: traefik
     cert-manager.io/cluster-issuer: letsencrypt-prod
