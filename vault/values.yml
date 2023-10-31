@@ -1,0 +1,14 @@
+server:
+  ingress:
+    enabled: true
+    tls:
+      - secretName: vault-exner-dev-tls
+        hosts:
+          - vault.exner.dev
+    hosts:
+      - host: vault.exner.dev
+    annotations:
+      spec.ingressClassName: traefik
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+
+
