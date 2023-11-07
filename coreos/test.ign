@@ -1,0 +1,28 @@
+{
+  "ignition": {
+    "version": "3.0.0"
+  },
+  "passwd": {
+    "users": [
+      {
+        "groups": [
+          "wheel",
+          "sudo"
+        ],
+        "name": "core",
+        "sshAuthorizedKeys": [
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDVKG/eEFh3f9vjissH/POclGm1/3W4RdlCOz6yHPfb/PlWKO2Sppda/3Lseq8qx+9P9IED3x1ExcewbvF9L9uPKKaGSgbBmesyjevD6NaU9Z/UpEdXYNTImTGqB/W4bMMWIUVmglyNcgtbzjhzsk8YvQNWuZFtHauRy6pUmmhv0ortvdlE1oRAZ5Z61xogBPoYygaxoYPKJhqQkSMJfJnKtfXs5JvjNeK/o5Pw/2r1fJICSaW7I8mXb1Zju9U86Ar28SoVMNsKC85dT0dRUSHH4Mg9jDLK8ICi4sG/RA9BsmIbJOB26F0b85ycUzm4mPCqPm5kWtuyScUOne+WwxJ73B+46Lv3N76Zhg185FZOOZLfR5BJ275gSedsjvq9EZH5BBoHhMoRHf0e3JyQaKcuqPwPc69tgwmTXIJhk5Bxh8kpasjDEEsVuD4VxEL6o8Tl9QJcnqJIgJBUAnsn2TDWKZ+3FXuqrc5zEnx9ymmhu9Txxvu0C8APlsF9kpGn4XE= linusexner@Linuss-MacBook-Air.local"
+        ]
+      }
+    ]
+  },
+  "systemd": {
+    "units": [
+      {
+        "contents": "[Unit]\nAfter=network-online.target\nWants=network-online.target\n[Service]\nType=oneshot\nExecStart=/bin/sh -c \"curl -sfL https://get.k3s.io | sh -\"\n[Install]\nWantedBy=multi-user.target\n",
+        "enabled": true,
+        "name": "run-k3s-installer.service"
+      }
+    ]
+  }
+}
