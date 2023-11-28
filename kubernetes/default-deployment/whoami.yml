@@ -1,32 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-webserver
+  name: whoami
   namespace: testing
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-webserver
+      app: whoami
   template:
     metadata:
       labels:
-        app: nginx-webserver
+        app: whoami
     spec:
       containers:
-        - name: nginx
-          image: nginx
+        - name: whoami
+          image: traefik/whoami
           ports:
             - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service
+  name: whoami
   namespace: testing
 spec:
   selector:
-    app: nginx-webserver
+    app: whoami
   ports:
     - protocol: TCP
       port: 80
@@ -35,7 +35,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginx-webserver-ingress
+  name: whoami
   namespace: testing
   annotations:
     spec.ingressClassName: traefik
@@ -50,7 +50,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: nginx-service
+                name: whoami
                 port:
                   number: 80
                   
