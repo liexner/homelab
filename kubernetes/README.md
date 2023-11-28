@@ -3,7 +3,7 @@
 ### 1. Install masternode
 
 ```
-curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --node-name k3s-master-01 --disable=traefik
+curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --node-name k3s-master-01 --disable=traefik,local-storage
 ```
 ### 2. Install custom traefik via helm
 
