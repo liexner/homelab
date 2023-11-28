@@ -5,6 +5,12 @@
 ```
 curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644 --node-name k3s-master-01 --disable=traefik,local-storage
 ```
+
+```
+ssh liexner@master "cat /etc/rancher/k3s/k3s.yaml" > ~/.kube/config.test
+export KUBECONFIG=~/.kube/config.test
+```
+
 ### 2. Install custom traefik via helm
 
 ### 3. Install cert-manager & cluster issuer
