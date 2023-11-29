@@ -14,8 +14,8 @@ template_name="$3"
 wget "$image_link" -O "cloud-image-$vm_id.img"
 apt update
 apt install -y libguestfs-tools
-virt-customize --install qemu-guest-agent -a jammy-server-cloudimg-amd64.img
-virt-customize --install nfs-common -a jammy-server-cloudimg-amd64.img
+virt-customize --install qemu-guest-agent -a "cloud-image-$vm_id.img"
+virt-customize --install nfs-common -a "cloud-image-$vm_id.img"
 
 qm create 9000 --name ubuntu22-template --memory 4096 --net0 virtio,bridge=vmbr0
 import_output=$(qm importdisk 9000 jammy-server-cloudimg-amd64.img local)
