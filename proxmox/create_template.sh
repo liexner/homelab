@@ -20,3 +20,6 @@ virt-customize --install nfs-common -a jammy-server-cloudimg-amd64.img
 qm create 9000 --name ubuntu22-template --memory 4096 --net0 virtio,bridge=vmbr0
 import_output=$(qm importdisk 9000 jammy-server-cloudimg-amd64.img local)
 echo "$import_output"
+
+
+rm "cloud-image-$vm_id.img"
