@@ -17,8 +17,8 @@ apt install -y libguestfs-tools
 virt-customize --install qemu-guest-agent -a "cloud-image-$vm_id.img"
 virt-customize --install nfs-common -a "cloud-image-$vm_id.img"
 
-qm create 9000 --name "$template_name" --memory 4096 --net0 virtio,bridge=vmbr0
-import_output=$(qm importdisk 9000 "cloud-image-$vm_id.img" local)
+qm create "$vm_id" --name "$template_name" --memory 4096 --net0 virtio,bridge=vmbr0
+import_output=$(qm importdisk "$vm_id" "cloud-image-$vm_id.img" local)
 #echo "$import_output"
 
 
