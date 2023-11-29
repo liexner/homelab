@@ -13,6 +13,9 @@ qm set 9000 --ide2 local:cloudinit && \
 qm set 9000 --boot c --bootdisk scsi0 && \
 qm set 9000 --serial0 socket --vga serial0 && \
 qm set 9000 --ipconfig0 ip=dhcp && \
+qm set 9000 --cores 2 && \
+qm set 9000 --agent enabled=1 && \
+qm set 9000 --onboot 1 && \
 qm resize 9000 scsi0 100G && \
 qm template 9000 
 
