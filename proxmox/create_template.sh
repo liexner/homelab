@@ -19,7 +19,7 @@ virt-customize --install nfs-common -a "cloud-image-$vm_id.img"
 
 qm create 9000 --name "$template_name" --memory 4096 --net0 virtio,bridge=vmbr0
 import_output=$(qm importdisk 9000 "cloud-image-$vm_id.img" local)
-echo "$import_output"
+#echo "$import_output"
 
 
 rm "cloud-image-$vm_id.img"
