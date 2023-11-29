@@ -9,12 +9,11 @@ qm create 9000 --name ubuntu22-template --memory 4096 --net0 virtio,bridge=vmbr0
 qm importdisk 9000 jammy-server-cloudimg-amd64.img local
 qm set 9000 --scsihw virtio-scsi-pci --scsi0 local:9000/vm-9000-disk-0.raw
 
-qm set 9000 --ide2 local-lvm:cloudinit
-qm set 9000 --boot c --bootdisk scsi0
-qm set 9000 --serial0 socket --vga serial0
-qm set 9000 --ipconfig0 ip=dhcp
-
-qm resize 9000 scsi0 50G
-qm template 9000
+qm set 9000 --ide2 local:cloudinit \
+qm set 9000 --boot c --bootdisk scsi0 \
+qm set 9000 --serial0 socket --vga serial0 \
+qm set 9000 --ipconfig0 ip=dhcp \
+qm resize 9000 scsi0 100G \
+qm template 9000 \
 
 ```
