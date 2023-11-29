@@ -7,7 +7,7 @@ virt-customize --install nfs-common -a jammy-server-cloudimg-amd64.img
 
 qm create 9000 --name ubuntu22-template --memory 4096 --net0 virtio,bridge=vmbr0
 qm importdisk 9000 jammy-server-cloudimg-amd64.img local
-qm set 9000 --scsihw virtio-scsi-pci --scsi0 local:vm-9000-disk-0
+qm set 9000 --scsihw virtio-scsi-pci --scsi0 local:9000/vm-9000-disk-0.raw
 
 qm set 9000 --ide2 local-lvm:cloudinit
 qm set 9000 --boot c --bootdisk scsi0
