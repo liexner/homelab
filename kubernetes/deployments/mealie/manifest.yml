@@ -24,18 +24,18 @@ spec:
           ports:
             - containerPort: 9000
           volumeMounts:
-            - name: nfs-storage
+            - name: mealie-storage
               mountPath: /app/data/
       volumes:
-        - name: nfs-storage
+        - name: mealie-storage
           persistentVolumeClaim:
-            claimName: mealie-pvc  # Reference the PVC
+            claimName: mealie  # Reference the PVC
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mealie-service
+  name: mealie
   namespace: mealie
 spec:
   selector:
@@ -49,7 +49,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: mealie-ingress
+  name: mealie
   namespace: mealie
   annotations:
     spec.ingressClassName: traefik
@@ -63,7 +63,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: mealie-service
+                name: mealie
                 port:
                   number: 9000
   tls:
