@@ -2,7 +2,7 @@
 wget https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
 apt update
 apt install -y libguestfs-tools
-virt-customize --install qemu-guest-agent -a debian-11-generic-amd64.qcow2
+virt-customize --install qemu-guest-agent -a jammy-server-cloudimg-amd64.img
 
 qm create 9000 --name ubuntu22-template --memory 4096 --net0 virtio,bridge=vmbr0
 qm importdisk 9000 jammy-server-cloudimg-amd64.img local
