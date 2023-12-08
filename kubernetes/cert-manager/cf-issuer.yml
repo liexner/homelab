@@ -1,0 +1,22 @@
+
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: cf-issuer
+  namespace: cert-manager
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: liexner@gmail.com
+    privateKeySecretRef:
+      name: letsencrypt-test
+    solvers:
+      - dns01:
+          cloudflare:
+            email: liexner@gmail.com
+            apiTokenSecretRef:
+              name: cf-token
+              key: api-token
+        selector:
+          dnsZones:
+            - "exner.dev"

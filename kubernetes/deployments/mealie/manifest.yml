@@ -53,7 +53,7 @@ metadata:
   namespace: mealie
   annotations:
     spec.ingressClassName: traefik
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   rules:
     - host: mealie.exner.dev
@@ -69,5 +69,5 @@ spec:
   tls:
     - hosts:
         - mealie.exner.dev
-      secretName: mealie-exner-dev-tls
+      # secretName: mealie-exner-dev-tls
 

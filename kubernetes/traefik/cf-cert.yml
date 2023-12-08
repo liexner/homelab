@@ -1,0 +1,15 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cf-cert
+  namespace: traefik
+spec:
+  secretName: exner-dev-cert-tls
+  issuerRef:
+    name: cf-issuer
+    kind: ClusterIssuer
+  commonName: "*.exner.dev"
+  dnsNames:
+  - "exner.dev"
+  - "*.exner.dev"

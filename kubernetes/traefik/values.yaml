@@ -3,6 +3,11 @@ providers:
     enabled: true
     allowCrossNamespace: true 
 
+tlsStore:
+  default:
+    defaultCertificate:
+      secretName: exner-dev-cert-tls
+
 ports:
   broker:
     port: 1883
