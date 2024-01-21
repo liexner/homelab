@@ -1,0 +1,15 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: klara-linus-cert
+  namespace: traefik
+spec:
+  secretName: klara-linus-com-cert-tls
+  issuerRef:
+    name: cf-issuer
+    kind: ClusterIssuer
+  commonName: "*.klara-linus.com"
+  dnsNames:
+  - "klara-linus.com"
+  - "*.klara-linus.com"

@@ -20,3 +20,4 @@ spec:
         selector:
           dnsZones:
             - "exner.dev"
+            - "klara-linus.com"
