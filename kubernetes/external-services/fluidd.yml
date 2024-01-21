@@ -30,7 +30,7 @@ metadata:
   namespace: external-service
   annotations:
     spec.ingressClassName: traefik
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   rules:
     - host: fluidd.exner.dev
@@ -46,4 +46,4 @@ spec:
   tls:
     - hosts:
         - fluidd.exner.dev
-      secretName: fluidd-exner-dev-tls
+      # secretName: fluidd-exner-dev-tls
