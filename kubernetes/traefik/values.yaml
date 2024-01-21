@@ -8,13 +8,13 @@ tlsStore:
     defaultCertificate:
       secretName: exner-dev-cert-tls
 
-ports:
-  broker:
-    port: 1883
-    expose: true
-    protocol: TCP
-additionalArguments:
-  - "--entrypoints.broker.address=:1883/tcp"
+# ports:
+#   broker:
+#     port: 1883
+#     expose: true
+#     protocol: TCP
+# additionalArguments:
+#   - "--entrypoints.broker.address=:1883/tcp"
   # test-udp:
   #   port: 8082
   #   expose: true
