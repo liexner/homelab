@@ -1,0 +1,18 @@
+http:
+  routers:
+    hass:
+      rule: "Host(`hass.exner.dev`)"
+      service: hass
+    fluidd:
+      rule: "Host(`fluidd.exner.dev`)"
+      service: fluidd
+
+  services:
+    hass:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.50.104:8123/"
+    fluidd:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.50.121/"
