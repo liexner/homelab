@@ -26,15 +26,31 @@ services:
       - --certificatesresolvers.cloudflare.acme.email=liexner@gmail.com
       - --certificatesresolvers.cloudflare.acme.storage=/letsencrypt/acme.json
 
-      # - --providers.file.filename=/testing/traefik/dynamic.yml
-      # - --providers.file.watch=true
+      - --providers.file.filename=/config/traefik/dynamic.yml
+      - --providers.file.watch=true
+    environment:
+      - CF_DNS_API_TOKEN=_t12XPa9-QBtgCNDXzocyvd4QBZpX_uvDKGixxqU
     ports:
       - 80:80
       - 443:443
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - letsencrypt_cert:/letsencrypt/
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./config:/config/traefik/
+
     networks:
       - proxy
+
+  whoami:
+    image: traefik/whoami
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`test.exner.dev`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      # - "traefik.http.middlewares.auth.basicauth.users=liexner:$$2y$$05$$BdY0TFzdWdYj9U5fQVStGuZg3e3v8M2.eRV9fe/QJad1aZc5Z1I7O"
+      # - "traefik.http.routers.whoami.middlewares=auth"
 
   registry:
     image: registry:2
