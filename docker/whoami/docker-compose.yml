@@ -1,0 +1,9 @@
+services:
+  whoami:
+    image: traefik/whoami
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`test.exner.dev`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
